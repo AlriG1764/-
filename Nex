@@ -1,0 +1,182 @@
+local player = game.Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+-- Create ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = playerGui
+
+-- Utility function for button press effects
+local function setupButton(button)
+    local originalColor = button.BackgroundColor3
+    local pressedColor = Color3.new(0.8, 0.8, 0.8) -- Dark white
+
+    button.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.Touch or input.UserInputType == Enum.UserInputType.MouseButton1 then
+            button.BackgroundColor3 = pressedColor
+        end
+    end)
+
+    button.InputEnded:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.Touch or input.UserInputType == Enum.UserInputType.MouseButton1 then
+            button.BackgroundColor3 = originalColor
+        end
+    end)
+
+    button.MouseButton1Down:Connect(function()
+        button.BackgroundColor3 = pressedColor
+    end)
+
+    button.MouseButton1Up:Connect(function()
+        button.BackgroundColor3 = originalColor
+    end)
+end
+
+-- Create Nex Button
+local nexButton = Instance.new("TextButton")
+nexButton.Parent = screenGui
+nexButton.Size = UDim2.new(0, 50, 0, 50) -- 50x50
+nexButton.Position = UDim2.new(0.5, -25, 0.5, -25)
+nexButton.BackgroundColor3 = Color3.new(1, 1, 1) -- White
+nexButton.Text = "Nex"
+nexButton.TextColor3 = Color3.new(1, 0, 0) -- Red
+nexButton.Font = Enum.Font.SourceSans
+nexButton.TextScaled = true
+nexButton.BorderSizePixel = 0
+nexButton.AnchorPoint = Vector2.new(0.5, 0.5)
+
+local uiCornerNex = Instance.new("UICorner")
+uiCornerNex.CornerRadius = UDim.new(1, 0) -- Circular
+uiCornerNex.Parent = nexButton
+
+setupButton(nexButton)
+
+-- Create Red Textbox
+local redTextbox = Instance.new("TextBox")
+redTextbox.Parent = screenGui
+redTextbox.Size = UDim2.new(0.9, 0, 0.7, 0) -- Covers most of the screen
+redTextbox.Position = UDim2.new(0.05, 0, 0.1, 0)
+redTextbox.BackgroundColor3 = Color3.new(1, 0, 0) -- Red
+redTextbox.BackgroundTransparency = 0.5 -- 50% transparent
+redTextbox.Text = ""
+redTextbox.TextColor3 = Color3.new(1, 1, 1) -- White
+redTextbox.Font = Enum.Font.SourceSans
+redTextbox.TextScaled = true
+redTextbox.Visible = false
+redTextbox.ClearTextOnFocus = false
+redTextbox.MultiLine = true
+redTextbox.TextSize = 18 -- Set a default text size
+redTextbox.TextWrapped = true -- Allows text to wrap
+redTextbox.TextEditable = true -- Infinite text input (Roblox default allows up to its max limit)
+
+-- Create Exit Button
+local exitButton = Instance.new("TextButton")
+exitButton.Parent = screenGui
+exitButton.Size = UDim2.new(0.15, 0, 0.1, 0) -- Bigger button
+exitButton.Position = UDim2.new(0.85, -10, 0.05, 0) -- Top-right corner
+exitButton.BackgroundColor3 = Color3.new(1, 1, 1) -- White
+exitButton.Text = "Exit"
+exitButton.TextColor3 = Color3.new(1, 0, 0) -- Red
+exitButton.Font = Enum.Font.SourceSans
+exitButton.TextScaled = true
+exitButton.Visible = false
+
+local uiCornerExit = Instance.new("UICorner")
+uiCornerExit.CornerRadius = UDim.new(0.2, 0) -- Smooth corners
+uiCornerExit.Parent = exitButton
+
+setupButton(exitButton)
+
+-- Create Execute Button
+local executeButton = Instance.new("TextButton")
+executeButton.Parent = screenGui
+executeButton.Size = UDim2.new(0.2, 0, 0.1, 0)
+executeButton.Position = UDim2.new(0.05, 0, 0.85, 0) -- Bottom-left corner
+executeButton.BackgroundColor3 = Color3.new(1, 1, 1) -- White
+executeButton.Text = "Execute"
+executeButton.TextColor3 = Color3.new(1, 0, 0) -- Red
+executeButton.Font = Enum.Font.SourceSans
+executeButton.TextScaled = true
+executeButton.Visible = false
+
+local uiCornerExecute = Instance.new("UICorner")
+uiCornerExecute.CornerRadius = UDim.new(0.2, 0) -- Smooth corners
+uiCornerExecute.Parent = executeButton
+
+setupButton(executeButton)
+
+-- Create Clear Button
+local clearButton = Instance.new("TextButton")
+clearButton.Parent = screenGui
+clearButton.Size = UDim2.new(0.2, 0, 0.1, 0)
+clearButton.Position = UDim2.new(0.3, 0, 0.85, 0) -- Next to Execute button
+clearButton.BackgroundColor3 = Color3.new(1, 1, 1) -- White
+clearButton.Text = "Clear"
+clearButton.TextColor3 = Color3.new(1, 0, 0) -- Red
+clearButton.Font = Enum.Font.SourceSans
+clearButton.TextScaled = true
+clearButton.Visible = false
+
+local uiCornerClear = Instance.new("UICorner")
+uiCornerClear.CornerRadius = UDim.new(0.2, 0) -- Smooth corners
+uiCornerClear.Parent = clearButton
+
+setupButton(clearButton)
+
+-- Dragging functionality for Nex button
+local dragging = false
+local dragStart, startPos
+
+nexButton.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.Touch or input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = true
+        dragStart = input.Position
+        startPos = nexButton.Position
+    end
+end)
+
+nexButton.InputChanged:Connect(function(input)
+    if dragging and (input.UserInputType == Enum.UserInputType.Touch or input.UserInputType == Enum.UserInputType.MouseMovement) then
+        local delta = input.Position - dragStart
+        nexButton.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+    end
+end)
+
+nexButton.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.Touch or input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = false
+    end
+end)
+
+-- Nex Button Click Event
+nexButton.MouseButton1Click:Connect(function()
+    nexButton.Visible = false
+    redTextbox.Visible = true
+    exitButton.Visible = true
+    executeButton.Visible = true
+    clearButton.Visible = true
+end)
+
+-- Exit Button Click Event
+exitButton.MouseButton1Click:Connect(function()
+    nexButton.Visible = true
+    redTextbox.Visible = false
+    exitButton.Visible = false
+    executeButton.Visible = false
+    clearButton.Visible = false
+end)
+
+-- Clear Button Click Event
+clearButton.MouseButton1Click:Connect(function()
+    redTextbox.Text = ""
+end)
+
+-- Execute Button Click Event
+executeButton.MouseButton1Click:Connect(function()
+    local scriptContent = redTextbox.Text
+    local success, errorMessage = pcall(function()
+        loadstring(scriptContent)()
+    end)
+    if not success then
+        warn("Error executing script: " .. errorMessage)
+    end
+end)
