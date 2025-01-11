@@ -93,7 +93,7 @@ local function Bypass(input)
     end
 
     local replacements = {
-        ["sex"] = "ṣex",
+        ["sex"] = "se̴x̷",
         ["i"] = "ı̇",
         ["j"] = "ȷ̇",
         [" "] = "",
