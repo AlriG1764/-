@@ -93,7 +93,186 @@ local function Bypass(input)
     end
 
     local replacements = {
-        ["sex"] = "se̴x̷",
+        ["sex"] = "ṡex",
+        ["i"] = "ı̇",
+        ["j"] = "ȷ̇",
+        [" "] = "",
+        ["kike"] = "kı̇ke",
+        ["shite"] = "shı̇te",
+        ["arse"] = "arse",
+        ["ass"] = "ass",
+        ["bastard"] = "ḅasṭard",
+        ["bitch"] = "bı̇tch",
+        ["childfucker"] = "",
+        ["child fucker"] = "",
+        ["cock"] = "c̣ock",
+        ["crap"] = "crap",
+        ["cunt"] = "cunț",
+        ["dick"] = "dı̇ck",
+        ["dick head"] = "",
+        ["dumbass"] = "",
+        ["dumb"] = "ḍumb",
+        ["faggot"] = "fạggot",
+        ["fuck"] = "fuck",
+        ["fucking"] = "fuckı̇ng",
+        ["fucker"] = "fuckeṛ",
+        ["shit"] = "shit",
+        ["nigga"] = "nı̇gga",
+        ["nigra"] = "nı̇gra",
+        ["nigger"] = "nı̇gger",
+        ["pussy"] = "pussỵ",
+        ["slut"] = "sIut",
+        ["clit"] = "clı̇t",
+        ["boobs"] = "ḅoobs",
+        ["breast"] = "breast",
+        ["sucker"] = "sucker",
+        ["boob"] = "ḅoob",
+        ["youtube"] = "youțube",
+        ["fucked"] = "fuckeḍ",
+        ["discord"] = "dı̇scord",
+        ["pornhub"] = "poṛnhub",
+        ["cum"] = "cum",
+    }
+
+    for word, replacement in pairs(replacements) do
+        input = input:gsub(word, replacement)
+    end
+
+    local A_1 = input
+    local A_2 = "All"
+
+    local textChatService = game:GetService("TextChatService")
+    if textChatService:FindFirstChild("TextChannels") then
+        textChatService.TextChannels.RBXGeneral:SendAsync(A_1)
+    else
+        local chatEvent = game:GetService("ReplicatedStorage"):FindFirstChild("DefaultChatSystemChatEvents")
+        if chatEvent and chatEvent:FindFirstChild("SayMessageRequest") then
+            chatEvent.SayMessageRequest:FireServer(A_1, A_2)
+        else
+            warn("Chat system not found!")
+        end
+    end
+end
+
+-- GUI
+local gui = Instance.new("ScreenGui")
+local GazerMain = Instance.new("Frame")
+local GazerTitle = Instance.new("TextLabel")
+local TextBax = Instance.new("TextBox")
+local chat = Instance.new("TextButton")
+
+gui.Name = "GazerGui"
+gui.Parent = coreGui
+
+GazerMain.Size = UDim2.new(0.5, 0, 0.5, 0)
+GazerMain.Position = UDim2.new(0.25, 0, 0.25, 0)
+GazerMain.BackgroundColor3 = Color3.new(1, 1, 1)
+GazerMain.Active = true
+GazerMain.Draggable = true
+GazerMain.Parent = gui
+
+GazerTitle.Size = UDim2.new(1, 0, 0.2, 0)
+GazerTitle.Text = "Void Bypasser🔥"
+GazerTitle.TextColor3 = Color3.new(1, 1, 1)
+GazerTitle.Font = Enum.Font.Bodoni
+GazerTitle.Parent = GazerMain
+
+TextBax.Size = UDim2.nlocal yapping = true
+
+local Gaze = [[
+]]
+
+local everyClipboard = setclipboard or toclipboard or set_clipboard or (Clipboard and Clipboard.set) or function() 
+    warn("Clipboard functionality is not supported on this platform.") 
+end
+
+local GazerHa_Cooldown = 0.8
+
+if not game:IsLoaded() then
+    game.Loaded:Wait()
+end
+
+local guiName = "GazeUI"
+local coreGui = game:GetService("CoreGui")
+
+-- Prevent the UI from being created multiple times
+local screenGui = coreGui:FindFirstChild(guiName)
+if not screenGui then
+    screenGui = Instance.new("ScreenGui")
+    screenGui.Name = guiName  
+    screenGui.Parent = coreGui
+end
+
+local function fadeText(labelText)
+    local label = Instance.new("TextLabel")
+    label.Parent = screenGui
+    label.Size = UDim2.new(0.5, 0, 0.2, 0)  
+    label.Position = UDim2.new(0.25, 0, 0.4, 0)  
+    label.BackgroundTransparency = 1
+    label.TextTransparency = 1
+    label.Text = labelText
+    label.TextColor3 = Color3.fromRGB(0, 0, 255)
+    label.TextScaled = true
+    label.Font = Enum.Font.GothamBlack 
+
+    local tweenService = game:GetService("TweenService")
+
+    -- Fade in
+    local fadeIn = tweenService:Create(label, TweenInfo.new(GazerHa_Cooldown), {TextTransparency = 0})
+    fadeIn:Play()
+    fadeIn.Completed:Wait()
+
+    -- Wait before fade out
+    task.wait(GazerHa_Cooldown)
+
+    -- Fade out
+    local fadeOut = tweenService:Create(label, TweenInfo.new(GazerHa_Cooldown), {TextTransparency = 1})
+    fadeOut:Play()
+    fadeOut.Completed:Wait()
+
+    label:Destroy()
+end
+
+if yapping then
+    fadeText("Void Bypasser Loading...")
+    fadeText("Created by: ReaperVoid")
+    fadeText("Channel: Unknown...")
+    fadeText("🔥executing....")
+end
+
+local function chatMessage(message)
+    local textChatService = game:GetService("TextChatService")
+    local generalChannel = textChatService:FindFirstChild("TextChannels") and textChatService.TextChannels:FindFirstChild("RBXGeneral")
+
+    if generalChannel then
+        generalChannel:SendAsync(message)
+    else
+        local chatService = game:GetService("ReplicatedStorage"):FindFirstChild("DefaultChatSystemChatEvents")
+        if chatService and chatService:FindFirstChild("SayMessageRequest") then
+            chatService.SayMessageRequest:FireServer(message, "All")
+        else
+            warn("Chat system not found!")
+        end
+    end
+end
+
+if yapping then
+    chatMessage("🔥Voı̇dbypasserhasbeenexecuted🔥")
+    everyClipboard(tostring(Gaze))
+end
+
+local function isTagged(message)
+    return string.find(message, "tagged") ~= nil
+end
+
+local function Bypass(input)
+    if isTagged(input) then
+        chatMessage("Message Detected Tagged")
+        return
+    end
+
+    local replacements = {
+        ["sex"] = "ṡex",
         ["i"] = "ı̇",
         ["j"] = "ȷ̇",
         [" "] = "",
@@ -178,6 +357,21 @@ GazerTitle.Font = Enum.Font.Bodoni
 GazerTitle.Parent = GazerMain
 
 TextBax.Size = UDim2.new(0.8, 0, 0.2, 0)
+TextBax.PlaceholderText = "(Chat)"
+TextBax.TextColor3 = Color3.new(1, 1, 1)
+TextBax.Font = Enum.Font.Code
+TextBax.Parent = GazerMain
+
+chat.Size = UDim2.new(0.3, 0, 0.2, 0)
+chat.Text = "Chat"
+chat.Font = Enum.Font.Code
+chat.Parent = GazerMain
+
+chat.MouseButton1Click:Connect(function()
+    local inputString = TextBax.Text
+    Bypass(inputString)
+end)
+ew(0.8, 0, 0.2, 0)
 TextBax.PlaceholderText = "(Chat)"
 TextBax.TextColor3 = Color3.new(1, 1, 1)
 TextBax.Font = Enum.Font.Code
